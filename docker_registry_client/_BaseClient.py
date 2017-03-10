@@ -249,7 +249,8 @@ class BaseClientV2(CommonBaseClient):
             if not token or desired_scope != scope:
                 logger.debug("Getting new token for scope: %s", desired_scope)
                 auth.get_new_token()
-
+            if 'auth' in self.method_kwargs:
+                self.method_kwargs['auth'] = None
             header['Authorization'] = 'Bearer %s' % self.auth.token
 
         if data and not content_type:
